@@ -31,6 +31,7 @@ const Nav = () => {
 
             {status === "authenticated" ?
             <div className="flex-center flex-row gap-4">
+                <div className="text-white text-base font-bold">Welcome back, {session.user.name}!</div>
                 <Image src={session.user.image} width={40} height={40} className="rounded-full" />
                 <button className="sign_btn" onClick={signOut}>Sign Out</button>
             </div>
