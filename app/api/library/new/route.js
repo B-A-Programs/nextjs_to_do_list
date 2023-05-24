@@ -12,8 +12,8 @@ export const POST = async (req) => {
             creator: userId,
         })
 
-        return new Response("Prompt created successfully", {status: 201})
+        return new Response("Prompt created successfully", {status: 200})
     } catch (error) {
-        return new Response("Failed to create prompt", {status: 500})
+        return new Response("Failed to create library", {status: 500})
     }
 }

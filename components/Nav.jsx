@@ -32,7 +32,7 @@ const Nav = () => {
             {session?.user ?
             <div className="flex-center flex-row gap-4">
                 <div className="text-white text-base font-bold">Welcome back, <span className="text-orange-500">{session.user.name}</span></div>
-                <Image src={session.user.image} width={40} height={40} className="rounded-full" />
+                <Image src={session.user.image} width={40} height={40} className="rounded-full" alt="user img" />
                 <button className="sign_out_btn" onClick={signOut}>Sign Out</button>
             </div>
             : 
