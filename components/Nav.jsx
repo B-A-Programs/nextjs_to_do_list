@@ -4,10 +4,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { getProviders, signIn, signOut, useSession } from "next-auth/react"
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 const Nav = () => {
     const { data: session, status } = useSession()
     const [providers, setProviders] = useState()
+    const Router = useRouter()
 
     useEffect(() => {
         const initProviders = async () => {

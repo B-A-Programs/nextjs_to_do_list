@@ -12,6 +12,10 @@ const handler = NextAuth({
         })
     ],
     callbacks : {
+        async redirect({ baseUrl }) {
+            return baseUrl
+        },
+
         async session({ session }) {
             await connectToDB();
             
