@@ -103,7 +103,7 @@ const Tasks = ({ name }) => {
                 <div className="flex-center max-w-2xl gap-6 mt-4 flex-wrap">
                     {toDo &&
                         toDo.map((task) => {
-                            return <TaskCard task={task.text} date={task.dueBy.split("T")[0]} key={task._id.toString()} status="toDo" />
+                            return <TaskCard id={task._id.toString()} findTasks={findTasks} task={task.text} date={task.dueBy.split("T")[0]} key={task._id.toString()} status="ToDo" />
                         })
                     }
                 </div>
@@ -115,7 +115,7 @@ const Tasks = ({ name }) => {
                 <div className="flex-center max-w-2xl gap-6 mt-4 flex-wrap">
                     {completed &&
                         completed.map((task) => {
-                            return <TaskCard task={task.text} date={task.dueBy.split("T")[0]} key={task._id.toString()} status="completed" />
+                            return <TaskCard id={task._id.toString()} findTasks={findTasks} task={task.text} date={task.dueBy.split("T")[0]} key={task._id.toString()} status="Completed" />
                         })
                     }
                 </div>

@@ -8,7 +8,7 @@ export const POST = async (req) => {
     try {
         await connectToDB();
 
-        const library = await Library.findOne({name: name})
+        const library = await Library.findOne({name: name, creator: userId})
 
         await Task.create({
             text: task,
