@@ -101,10 +101,12 @@ const Tasks = ({ name }) => {
                 <div className="sec_title">To Do</div>
 
                 <div className="flex-center max-w-2xl gap-6 mt-4 flex-wrap">
-                    {toDo &&
+                    {(toDo && toDo.length > 0) ?
                         toDo.map((task) => {
                             return <TaskCard id={task._id.toString()} findTasks={findTasks} task={task.text} date={task.dueBy.split("T")[0]} key={task._id.toString()} status="ToDo" />
                         })
+                    :
+                        <div className="text-white font-bold text-2xl mt-40">Looks like you don't have any<br /> tasks to do in this library!</div>
                     }
                 </div>
             </div>
@@ -113,10 +115,12 @@ const Tasks = ({ name }) => {
                 <div className="sec_title">Completed</div>
 
                 <div className="flex-center max-w-2xl gap-6 mt-4 flex-wrap">
-                    {completed &&
+                    {(completed && completed.length > 0) ?
                         completed.map((task) => {
                             return <TaskCard id={task._id.toString()} findTasks={findTasks} task={task.text} date={task.dueBy.split("T")[0]} key={task._id.toString()} status="Completed" />
                         })
+                    :
+                        <div className="text-white font-bold text-2xl mt-40">Looks like you don't have any<br /> completed tasks in this library!</div>
                     }
                 </div>
             </div>
