@@ -9,7 +9,7 @@ export default function Home() {
   const name = params.name
 
   return (
-    <div className="flex-center flex-col mt-14 px-12">
+    <div className="mt-6 px-12">
       <h1 className="head_title text-center">Manage your <span className="text-orange-500">{name}</span> tasks</h1>
 
       <Tasks name={name} />

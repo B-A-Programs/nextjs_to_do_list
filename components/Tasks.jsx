@@ -1,13 +1,38 @@
 'use client'
 
 import { useSession } from "next-auth/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import TaskCard from "@components/TaskCard"
 
 const Tasks = ({ name }) => {
   const { data: session } = useSession()
   const [task, setTask] = useState("")
   const [date, setDate] = useState("")
   const [message, setMessage] = useState("")
+
+  const [toDo, setToDo] = useState()
+  const [completed, setCompleted] = useState()
+
+  const findTasks = async () => {
+    try {
+        const response = await fetch("/api/task", {
+            method: "POST",
+            body: JSON.stringify({
+                name: name,
+            })
+        })
+        const data = await response.json()
+
+        setToDo(data.toDo)
+        setCompleted(data.completed)
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    findTasks()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -29,6 +54,7 @@ const Tasks = ({ name }) => {
             })
 
             if(response.ok) {
+                findTasks()
                 setMessage("")
                 setDate("")
                 setTask("")
@@ -68,11 +94,33 @@ const Tasks = ({ name }) => {
         </form>
         {message && <div className="error mt-4">{message}</div>}
 
-        {/* <div className="flex-center flex-row">
-            <TaskCol />
-            <TaskCol />
-            <TaskCol />
-        </div> */}
+        <hr className="bg-white h-0.5 my-6" />
+
+        <div className="flex justify-around">
+            <div className="flex items-center flex-col">
+                <div className="sec_title">To Do</div>
+
+                <div className="flex-center max-w-2xl gap-6 mt-4 flex-wrap">
+                    {toDo &&
+                        toDo.map((task) => {
+                            return <TaskCard task={task.text} date={task.dueBy.split("T")[0]} key={task._id.toString()} status="toDo" />
+                        })
+                    }
+                </div>
+            </div>
+            
+            <div className="flex items-center flex-col">
+                <div className="sec_title">Completed</div>
+
+                <div className="flex-center max-w-2xl gap-6 mt-4 flex-wrap">
+                    {completed &&
+                        completed.map((task) => {
+                            return <TaskCard task={task.text} date={task.dueBy.split("T")[0]} key={task._id.toString()} status="completed" />
+                        })
+                    }
+                </div>
+            </div>
+        </div>
     </>
   )
 }
