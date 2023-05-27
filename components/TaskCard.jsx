@@ -49,11 +49,11 @@ const TaskCard = ({ id, task, date, status, findTasks }) => {
                     </div>
 
                     <div className='flex'>
-                        <Image className='p-0.5 cursor-pointer' src="/edit-button-svg.svg" width={30} height={30} onClick={() => setEdit(true)} alt="edit icon" />
+                        <Image className='p-0.5 cursor-pointer hover:bg-stone-300 rounded-md flex-center' src="/edit-button-svg.svg" width={30} height={30} onClick={() => setEdit(true)} alt="edit icon" />
                         {status == "ToDo" ?
-                            <Image className='bg-green-400 rounded-full p-1 cursor-pointer' onClick={handleComplete} src="/icons8-checkmark.svg" width={34} height={34} alt="check icon"  />
+                            <Image className='bg-green-400 hover:bg-green-500 rounded-full p-1 cursor-pointer' onClick={handleComplete} src="/icons8-checkmark.svg" width={34} height={34} alt="check icon"  />
                         :
-                            <div className='bg-red-400 p-1 px-3 text-black font-bold text-lg rounded-full cursor-pointer' onClick={handleDelete}>X</div>
+                            <div className='bg-red-400 hover:bg-red-500 p-1 px-3 text-black font-bold text-lg rounded-full cursor-pointer' onClick={handleDelete}>X</div>
                         }
                     </div>
                 </div>

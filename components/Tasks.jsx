@@ -3,8 +3,10 @@
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import TaskCard from "@components/TaskCard"
+import { useRouter } from "next/navigation"
 
 const Tasks = ({ name }) => {
+  const Router = useRouter()
   const { data: session } = useSession()
   const [task, setTask] = useState("")
   const [date, setDate] = useState("")
@@ -68,8 +70,24 @@ const Tasks = ({ name }) => {
     }
   }
 
+  const handleDelete = async () => {
+    try {
+        await fetch("/api/library/delete", {
+            method: "POST",
+            body: JSON.stringify({
+                name: name
+            })
+        })
+
+        Router.push("/")
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
   return (
     <>
+        <div className='bg-red-400 p-1 ml-12 px-3 text-red-700 hover:bg-red-500 hover:text-red-800 font-bold text-lg rounded-full cursor-pointer float-left absolute' onClick={handleDelete}>Delete library</div>
         <form className="w-full mt-4 flex-center" onSubmit={(e) => handleSubmit(e)}>
             <label className="flex-center flex-col w-full xl:w-1/3">
             <div className="text-orange-200 text-lg">Create new task in the <span className="text-orange-500">{name}</span> library: </div>

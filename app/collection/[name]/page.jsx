@@ -2,11 +2,10 @@
 
 import Tasks from "@components/Tasks"
 import { useParams } from "next/navigation"
-import { useState } from "react"
 
 export default function Home() {
   const params = useParams()
-  const name = params.name
+  const name = decodeURI(params.name)
 
   return (
     <div className="mt-6 px-12">
