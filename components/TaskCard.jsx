@@ -1,6 +1,10 @@
 import Image from 'next/image'
+import { useState } from 'react'
+import EditForm from './EditForm'
 
 const TaskCard = ({ id, task, date, status, findTasks }) => {
+  const [edit, setEdit] = useState(false)
+
   const handleComplete = async () => {
     try {
         await fetch("/api/task/complete", {
@@ -32,26 +36,32 @@ const TaskCard = ({ id, task, date, status, findTasks }) => {
   }
 
   return (
-    <div className='bg-slate-200 py-2 px-3 rounded-xl border border-orange-300 max-w-lg'>
-        <div className='task_text flex'>
-            <h1 className='font-bold text-black mr-2'>Task:</h1> <div className='text-center'> {task} </div>
-        </div>
+    <>
+        {!edit ?
+            <div className='bg-slate-200 py-2 px-3 rounded-xl border border-orange-300 max-w-lg'>
+                <div className='task_text flex'>
+                    <h1 className='font-bold text-black mr-2'>Task:</h1> <div className='text-center'> {task} </div>
+                </div>
 
-        <div className='flex-between mt-2 gap-4'>
-            <div className='text-sm text-stone-500'>
-                Due by: {date}
-            </div>
+                <div className='flex-between mt-2 gap-4'>
+                    <div className='text-sm text-stone-500'>
+                        Due by: {date}
+                    </div>
 
-            <div className='flex'>
-                <Image className='p-0.5' src="/edit-button-svg.svg" width={30} height={30} alt="edit icon" />
-                {status == "ToDo" ?
-                    <Image className='bg-green-400 rounded-full p-1 cursor-pointer' onClick={handleComplete} src="/icons8-checkmark.svg" width={34} height={34} alt="check icon"  />
-                :
-                    <div className='bg-red-400 p-1 px-3 text-black font-bold text-lg rounded-full cursor-pointer' onClick={handleDelete}>X</div>
-                }
+                    <div className='flex'>
+                        <Image className='p-0.5 cursor-pointer' src="/edit-button-svg.svg" width={30} height={30} onClick={() => setEdit(true)} alt="edit icon" />
+                        {status == "ToDo" ?
+                            <Image className='bg-green-400 rounded-full p-1 cursor-pointer' onClick={handleComplete} src="/icons8-checkmark.svg" width={34} height={34} alt="check icon"  />
+                        :
+                            <div className='bg-red-400 p-1 px-3 text-black font-bold text-lg rounded-full cursor-pointer' onClick={handleDelete}>X</div>
+                        }
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        :
+            <EditForm task={task} date={date} id={id} findTasks={findTasks} setEdit={setEdit} />
+        }
+    </>
   )
 }
 
