@@ -40,13 +40,20 @@ const TaskCard = ({ id, task, date, status, findTasks }) => {
         {!edit ?
             <div className='bg-slate-200 py-2 px-3 rounded-xl border border-orange-300 max-w-lg'>
                 <div className='task_text flex'>
+                    { (((new Date(date)).getTime() - (new Date()).getTime() < 0 ) && status != "Completed") && <div className='bg-red-500 text-red-800 w-6 h-6 font-bold rounded-full flex-center mr-1'>!</div> }
                     <h1 className='font-bold text-black mr-2'>Task:</h1> <div className='text-center'> {task} </div>
                 </div>
 
                 <div className='flex-between mt-2 gap-4'>
-                    <div className='text-sm text-stone-500'>
-                        Due by: {date}
-                    </div>
+                    {((new Date(date)).getTime() - (new Date()).getTime() < 0 && status != "Completed")?
+                        <div className='text-sm text-red-400 font-bold'>
+                            Due by: {date}
+                        </div>
+                    :
+                        <div className='text-sm text-stone-500 font-medium'>
+                            Due by: {date}
+                        </div>
+                    }
 
                     <div className='flex'>
                         <Image className='p-0.5 cursor-pointer hover:bg-stone-300 rounded-md flex-center' src="/edit-button-svg.svg" width={30} height={30} onClick={() => setEdit(true)} alt="edit icon" />

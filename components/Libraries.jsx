@@ -8,14 +8,16 @@ const Libraries = () => {
   const [library, setLibrary] = useState("")
   const [message, setMessage] = useState("")
   const { data: session, status } = useSession()
+  const [urgent, setUrgent] = useState([])
 
   const [collections, setCollections] = useState([])
 
   const findLibrary = async () => {
     const response = await fetch("/api/library");
-    const data = await response.json()
+    const {libraries, urgentLibs} = await response.json()
 
-    setCollections(data);
+    setUrgent(urgentLibs);
+    setCollections(libraries);
   }
 
   useEffect(() => {
@@ -73,7 +75,7 @@ const Libraries = () => {
 
             <div className="flex-center max-w-4xl gap-6 columns-5 flex-wrap py-3">
                 {Object.values(collections).map((library) => (
-                    <LibCard name={library.name} key={library.name} />
+                    <LibCard name={library.name} key={library.name} urgent={urgent.includes(library.name)} />
                 ))}
             </div>
         </>

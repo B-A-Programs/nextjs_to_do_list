@@ -10,7 +10,7 @@ export const POST = async (req) => {
         const task = await Task.findById(id)
 
         task.text = text
-        task.date = date
+        task.dueBy = date
         
         task.save()
 
