@@ -7,6 +7,14 @@ export const POST = async (req) => {
     try {
         await connectToDB();
 
+        const existingLibrary = await Library.find({
+            name: libraryName,
+            creator: userId,
+        })
+
+        if(existingLibrary.length > 0)
+            return new Response("Failed to create library", {status: 500})
+
         await Library.create({
             name: libraryName,
             creator: userId,
